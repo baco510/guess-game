@@ -1,0 +1,69 @@
+package com.company;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+
+public class GuessGame implements ActionListener {
+
+    private JLabel Labels;
+
+    private static int BtnNumbers = 10;
+
+    private int nmbrGuess;
+
+    public GuessGame() {
+        Random rand = new Random();
+        nmbrGuess = 1 + rand.nextInt(BtnNumbers);
+        createFrameAndGUI();
+    }
+
+    private void createFrameAndGUI() {
+        JFrame a = new JFrame();
+        a.setResizable(false);
+        a.setSize(1000, 1000);
+        a.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JPanel b = new JPanel();
+
+        for (int number = 1; number <= BtnNumbers; number++) {
+            String numberString = Integer.toString(number);
+            JButton numberButton = new JButton(numberString);
+            numberButton.setActionCommand(numberString);
+            numberButton.addActionListener(this);
+            b.add(numberButton);
+        }
+        Labels = new JLabel("Guess a number between 1 and 10");
+        b.add(Labels);
+
+        a.add(b);
+
+        a.pack();
+        a.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new GuessGame();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        String numberString = e.getActionCommand();
+
+        int number = Integer.parseInt(numberString);
+
+
+        if (nmbrGuess == number) {
+            Labels.setText("You won, " + number + " is the number!");
+        } else if (nmbrGuess > number) {
+            Labels.setText("That number is too low!");
+        } else {
+            Labels.setText("That number is too high!");
+        }
+    }
+}
+
+
+                
+                
